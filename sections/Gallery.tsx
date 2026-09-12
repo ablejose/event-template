@@ -83,24 +83,12 @@ export default function Gallery() {
           </div>
         </Reveal>
 
-        {/* VIDEOS — portrait reels, press to play. On desktop a pull-quote fills the space beside the reel. */}
+        {/* VIDEOS — portrait reels, press to play. The reel sits on the left; a pull-quote fills the space on the right. */}
         <Reveal className="mt-16" delay={0.1}>
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1fr_330px] lg:gap-16">
-            {/* Left — editorial quote so the desktop layout never feels empty */}
-            <div className="max-w-md">
-              <p className="eyebrow text-muted">Videos</p>
-              <blockquote className="display mt-4 text-espresso" style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}>
-                &ldquo;Every clip here is a real Madeena event.&rdquo;
-              </blockquote>
-              <p className="body-copy mt-4">
-                Weddings, receptions and functions we&apos;ve catered and styled across Malappuram.
-                Press play and picture your own day.
-              </p>
-            </div>
-
-            {/* Right — the reel */}
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,400px)_1fr] lg:gap-16">
+            {/* Left — the reel (wider, flush to the left on desktop) */}
             <div className="w-full">
-              <div className="relative mx-auto w-full max-w-[330px] overflow-hidden rounded-brand bg-sand">
+              <div className="relative mx-auto w-full max-w-[400px] overflow-hidden rounded-brand bg-sand lg:mx-0">
                 <div
                   className="flex"
                   style={{
@@ -179,6 +167,18 @@ export default function Gallery() {
               )}
               <p className="mt-3 text-center font-sans text-xs text-muted">
                 Use the arrows to browse · tap a clip to play with sound
+              </p>
+            </div>
+
+            {/* Right — editorial quote so the desktop layout never feels empty */}
+            <div className="max-w-md lg:pl-2">
+              <p className="eyebrow text-muted">Videos</p>
+              <blockquote className="display mt-4 text-espresso" style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}>
+                &ldquo;Every clip here is a real Madeena event.&rdquo;
+              </blockquote>
+              <p className="body-copy mt-4">
+                Weddings, receptions and functions we&apos;ve catered and styled across Malappuram.
+                Press play and picture your own day.
               </p>
             </div>
           </div>

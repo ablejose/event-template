@@ -20,8 +20,12 @@ export interface GalleryVideo {
 export const galleryImages: GalleryItem[] = [
   { src: "/images/g1.webp", alt: "Floral wedding stage décor by Madeena" },
   { src: "/images/g2.webp", alt: "Fresh fruit and salad buffet spread" },
+  { src: "/images/g3.webp", alt: "Fresh juice welcome-drinks counter at an event" },
   { src: "/images/g6.webp", alt: "Banquet hall set for a reception" },
+  { src: "/images/g5.webp", alt: "Uniformed Madeena crew serving welcome drinks" },
+  { src: "/images/g4.webp", alt: "Live tea and spice welcome-drinks station" },
   { src: "/images/g7.webp", alt: "Cultural performance at a celebration" },
+  { src: "/images/g8.webp", alt: "Event setup and ushers at an inauguration" },
 ];
 
 /**

@@ -6,10 +6,9 @@ import { waLink } from "@/config/site";
 /**
  * PROCESS TRUST — "How we work".
  * Turns "they make beautiful events" into "they have a system for delivering them".
- * Styled like the "What we do" (Services) section: white background, cream cards,
- * same fonts/sizes — with golden (saffron) headings and step titles.
- * Steps describe Madeena's actual catering + event-management flow. Do not add
- * capabilities the business does not actually offer.
+ * White background, golden (saffron) numbers/headings — a numbered stepper with a
+ * connecting line on desktop. Steps describe Madeena's actual catering +
+ * event-management flow; do not add capabilities the business does not offer.
  */
 const steps = [
   {
@@ -58,13 +57,16 @@ export default function Process() {
           </p>
         </Reveal>
 
-        <ol className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        <ol className="relative mt-14 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
+          {/* Connecting line behind the number badges (desktop) */}
+          <div aria-hidden className="pointer-events-none absolute left-0 right-0 top-8 hidden h-px bg-sand lg:block" />
           {steps.map((s, i) => (
-            <Reveal as="li" key={s.n} delay={i * 0.08} className="h-full">
-              <div className="flex h-full flex-col rounded-brand border border-sand bg-cream p-6 transition-all duration-300 hover:-translate-y-1 hover:border-saffron hover:shadow-[0_20px_44px_-24px_rgba(122,46,42,0.35)]">
-                <span className="font-display text-3xl text-saffron">{s.n}</span>
-                <span className="mt-4 h-px w-8 bg-saffron/50" />
-                <h3 className="mt-4 font-display text-xl text-saffron-2">{s.title}</h3>
+            <Reveal as="li" key={s.n} delay={i * 0.08} className="relative">
+              <div className="flex flex-col items-start">
+                <span className="relative z-10 grid h-16 w-16 place-items-center rounded-full border border-saffron bg-white font-display text-2xl text-saffron-2 shadow-[0_14px_30px_-16px_rgba(196,137,46,0.6)]">
+                  {s.n}
+                </span>
+                <h3 className="mt-5 font-display text-xl text-saffron-2">{s.title}</h3>
                 <p className="body-copy mt-2">{s.text}</p>
               </div>
             </Reveal>
@@ -72,7 +74,7 @@ export default function Process() {
         </ol>
 
         <Reveal delay={0.1}>
-          <div className="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+          <div className="mt-14 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <Button href={waLink()} variant="whatsapp" external>
               <WhatsAppIcon size={18} /> Plan your event
             </Button>
