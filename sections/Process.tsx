@@ -2,9 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Reveal from "@/components/Reveal";
-import { Button } from "@/components/ui/Button";
-import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
-import { waLink } from "@/config/site";
 
 /**
  * PROCESS TRUST — "How we work".
@@ -129,17 +126,6 @@ export default function Process() {
             </li>
           ))}
         </ol>
-
-        <Reveal delay={0.1}>
-          <div className="mt-14 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-            <Button href={waLink()} variant="whatsapp" external>
-              <WhatsAppIcon size={18} /> Plan your event
-            </Button>
-            <p className="font-sans text-sm text-muted">
-              Tell us your date and guest count — we&apos;ll reply with a menu and a clear quote.
-            </p>
-          </div>
-        </Reveal>
       </div>
     </section>
   );

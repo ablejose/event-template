@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Phone, MapPin, Clock, Navigation, Star } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import { Img } from "@/components/ui/Img";
@@ -26,6 +26,40 @@ export default function Contact() {
   const label = "font-sans text-sm font-medium text-espresso";
   const input =
     "mt-2 w-full rounded-2xl border border-sand bg-white px-4 py-3 font-sans text-sm text-ink outline-none transition-colors placeholder:text-muted/70 focus:border-saffron";
+
+  // Typewriter reveal for the heading — "writes" the text when the section scrolls into view.
+  const headingText = "Let's plan your event together.";
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
+  const [typed, setTyped] = useState(0);
+  const startedRef = useRef(false);
+
+  useEffect(() => {
+    const node = headingRef.current;
+    if (!node) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setTyped(headingText.length);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting && !startedRef.current) {
+            startedRef.current = true;
+            io.disconnect();
+            let n = 0;
+            const id = setInterval(() => {
+              n += 1;
+              setTyped(n);
+              if (n >= headingText.length) clearInterval(id);
+            }, 45);
+          }
+        });
+      },
+      { threshold: 0.6 }
+    );
+    io.observe(node);
+    return () => io.disconnect();
+  }, []);
 
   return (
     <section id="contact" aria-labelledby="contact-heading" className="bg-white py-12 md:py-16">
@@ -67,8 +101,24 @@ export default function Contact() {
           <Reveal delay={0.1} className="order-1 lg:order-2">
             <div>
               <p className="eyebrow">Plan your event</p>
-              <h2 id="contact-heading" className="display mt-4" style={{ fontSize: "clamp(1.9rem, 3.4vw, 3rem)" }}>
-                Let&apos;s plan your event together.
+              <h2
+                id="contact-heading"
+                ref={headingRef}
+                aria-label={headingText}
+                className="display mt-4 text-saffron-2"
+                style={{ fontSize: "clamp(1.9rem, 3.4vw, 3rem)" }}
+              >
+                <span aria-hidden="true">
+                  {headingText.slice(0, typed)}
+                  <span className="text-transparent">{headingText.slice(typed)}</span>
+                  {typed < headingText.length && (
+                    <span
+                      aria-hidden="true"
+                      className="ml-1 inline-block w-[0.5ch] animate-pulse bg-saffron-2 align-[-0.12em]"
+                      style={{ height: "0.92em" }}
+                    />
+                  )}
+                </span>
               </h2>
               <p className="body-copy mt-4 max-w-md">
                 Share a few details and we&apos;ll pick it up on WhatsApp — with a menu and a clear quote.
