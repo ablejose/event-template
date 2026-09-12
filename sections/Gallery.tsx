@@ -36,8 +36,12 @@ export default function Gallery() {
         <Reveal>
           <p className="eyebrow">Our work</p>
           <h2 id="gallery-heading" className="display mt-4" style={{ fontSize: "clamp(1.9rem, 3.4vw, 3rem)" }}>
-            Real events, real spreads
+            Imagine your event like this
           </h2>
+          <p className="body-copy mt-4 max-w-xl">
+            Real weddings and functions we&apos;ve catered and styled across Malappuram — the spreads,
+            the stage and the crowd on the day.
+          </p>
         </Reveal>
 
         {/* IMAGES — auto-scrolling right to left */}

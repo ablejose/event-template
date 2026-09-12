@@ -55,6 +55,14 @@ export default function About() {
                 </li>
               ))}
             </ul>
+            <a
+              href={site.mapsLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-underline mt-6 inline-flex items-center gap-2 font-sans text-sm font-medium text-espresso"
+            >
+              <Star size={15} className="fill-saffron text-saffron" /> Read our {site.reviews} reviews on Google
+            </a>
           </div>
         </Reveal>
 

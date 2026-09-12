@@ -10,9 +10,9 @@ export default function Contact() {
       <div className="mx-auto max-w-shell px-6">
         <Reveal>
           <div className="max-w-2xl">
-            <p className="eyebrow">Enquire</p>
+            <p className="eyebrow">Plan your event</p>
             <h2 id="contact-heading" className="display mt-4" style={{ fontSize: "clamp(1.9rem, 3.4vw, 3rem)" }}>
-              Let’s plan your event.
+              Tell us your date — we&apos;ll take it from there.
             </h2>
             <p className="body-copy mt-4 max-w-md">
               Tell us your date and guest count on WhatsApp or by phone — we’ll get straight back

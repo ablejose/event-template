@@ -32,8 +32,9 @@ export const waLink = (text: string = DEFAULT_WA_MESSAGE) =>
 export const telLink = `tel:${site.phone.replace(/\s+/g, "")}`;
 
 export const navLinks = [
-  { label: "Our work", href: "#gallery" },
   { label: "Services", href: "#services" },
+  { label: "Our work", href: "#gallery" },
+  { label: "How we work", href: "#process" },
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ] as const;

@@ -104,7 +104,7 @@ export default function Header() {
             <Phone size={16} />
           </a>
           <Button href={waLink()} variant="primary" external>
-            Enquire now
+            Plan your event
           </Button>
         </div>
 

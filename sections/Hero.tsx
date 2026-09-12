@@ -82,9 +82,17 @@ export default function Hero() {
           </span>
         </h1>
 
+        <p
+          className="mt-6 max-w-xl font-sans text-base font-light leading-relaxed"
+          style={{ color: "rgba(255,255,255,0.9)", textShadow: "0 1px 20px rgba(0,0,0,0.4)" }}
+        >
+          Weddings, receptions and functions across Malappuram — cooked fresh, styled beautifully,
+          and run end to end.
+        </p>
+
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
           <Button href={waLink()} variant="whatsapp" external>
-            <WhatsAppIcon size={18} /> Enquire on WhatsApp
+            <WhatsAppIcon size={18} /> Plan your event
           </Button>
           <Button href="#gallery" variant="outline" className="border-ivory/60 text-ivory hover:bg-ivory/10">
             View our work

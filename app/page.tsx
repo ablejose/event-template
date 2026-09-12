@@ -2,18 +2,27 @@ import Hero from "@/sections/Hero";
 import TrustBar from "@/sections/TrustBar";
 import Services from "@/sections/Services";
 import Gallery from "@/sections/Gallery";
-import InstagramCta from "@/sections/Instagram";
+import Process from "@/sections/Process";
 import About from "@/sections/About";
+import InstagramCta from "@/sections/Instagram";
 import Contact from "@/sections/Contact";
 import Footer from "@/sections/Footer";
 
+/**
+ * Page order follows the AIDA conversion journey:
+ *  Hero (Attention) -> TrustBar (instant credibility) -> Services (Interest,
+ *  "what we do") -> Gallery (Desire, real event work) -> Process (Process Trust,
+ *  "how we work") -> About + Google reviews (Social proof) ->
+ *  Instagram (more real work) -> Contact (Action).
+ */
 export default function HomePage() {
   return (
     <main>
       <Hero />
       <TrustBar />
-      <Gallery />
       <Services />
+      <Gallery />
+      <Process />
       <About />
       <InstagramCta />
       <Contact />
