@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight, Play, Maximize2 } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import { Img } from "@/components/ui/Img";
 import Lightbox from "@/components/Lightbox";
@@ -9,7 +9,8 @@ import { galleryImages, galleryVideos, gallerySettings } from "@/config/gallery"
 
 export default function Gallery() {
   const [active, setActive] = useState<number | null>(null); // lightbox index
-  const [slide, setSlide] = useState(0);
+  const [photo, setPhoto] = useState(0); // big photo-card index
+  const [slide, setSlide] = useState(0); // video index
   // Every video is press-to-play — nothing autoplays; a clip only mounts/plays after a click.
   const [played, setPlayed] = useState<Set<number>>(() => new Set());
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
@@ -17,6 +18,14 @@ export default function Gallery() {
   const total = galleryVideos.length;
   const go = (dir: number) => setSlide((s) => (s + dir + total) % total);
   const play = (i: number) => setPlayed((p) => new Set(p).add(i));
+
+  // Big photo card: show one image at a time, auto-swapping with a 0.8s crossfade.
+  // Paused while the lightbox is open.
+  useEffect(() => {
+    if (active !== null) return;
+    const id = setInterval(() => setPhoto((p) => (p + 1) % galleryImages.length), 3200);
+    return () => clearInterval(id);
+  }, [active]);
 
   // Only the video on the current slide should be playing; pause the others.
   useEffect(() => {
@@ -26,9 +35,6 @@ export default function Gallery() {
       else v.pause();
     });
   }, [slide, played]);
-
-  // Duplicate the image set so the right-to-left strip loops seamlessly.
-  const strip = [...galleryImages, ...galleryImages];
 
   return (
     <section id="gallery" aria-labelledby="gallery-heading" className="bg-white py-12 md:py-16">
@@ -44,46 +50,55 @@ export default function Gallery() {
           </p>
         </Reveal>
 
-        {/* IMAGES — auto-scrolling right to left */}
+        {/* PHOTOS — one big card at a time, auto-crossfading every few seconds */}
         <Reveal className="mt-12" delay={0.05}>
           <p className="eyebrow mb-4 text-muted">Photos</p>
-          <div
-            className="marquee-viewport relative overflow-hidden rounded-brand"
-            style={{
-              maskImage: "linear-gradient(to right, transparent, #000 6%, #000 94%, transparent)",
-              WebkitMaskImage: "linear-gradient(to right, transparent, #000 6%, #000 94%, transparent)",
-            }}
+          <button
+            onClick={() => setActive(photo)}
+            aria-label="Open photo gallery"
+            className="group relative block w-full overflow-hidden rounded-brand bg-sand"
+            style={{ aspectRatio: "16 / 10" }}
           >
-            <ul
-              className="marquee-track flex w-max gap-4"
-              style={{ ["--marquee-duration" as any]: `${gallerySettings.imageScrollSeconds}s` }}
-            >
-              {strip.map((item, i) => (
-                <li key={`${item.src}-${i}`} className="shrink-0">
-                  <button
-                    onClick={() => setActive(i % galleryImages.length)}
-                    aria-label={`Open image: ${item.alt}`}
-                    className="group relative block overflow-hidden rounded-brand"
-                    style={{ width: "clamp(240px, 34vw, 380px)", aspectRatio: "16 / 10" }}
-                  >
-                    <Img
-                      src={item.src}
-                      alt={item.alt}
-                      fallbackSeed={item.src}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.06]"
-                    />
-                    <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                    <span className="pointer-events-none absolute inset-x-0 bottom-0 p-4 text-left font-sans text-sm text-ivory opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                      {item.alt}
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
+            {galleryImages.map((item, i) => (
+              <Img
+                key={item.src}
+                src={item.src}
+                alt={item.alt}
+                fallbackSeed={item.src}
+                className="absolute inset-0 h-full w-full object-cover"
+                style={{
+                  opacity: i === photo ? 1 : 0,
+                  transition: `opacity ${gallerySettings.videoTransitionSeconds}s ease-in-out`,
+                }}
+              />
+            ))}
+            <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/10 to-transparent" />
+            <span className="pointer-events-none absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-ivory/85 text-espresso opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <Maximize2 size={18} />
+            </span>
+            <span className="pointer-events-none absolute inset-x-0 bottom-0 p-5 text-left font-sans text-sm text-ivory md:p-6 md:text-base">
+              {galleryImages[photo].alt}
+            </span>
+          </button>
+
+          {/* Dots — jump to any photo */}
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+            {galleryImages.map((_, i) => (
+              <button
+                key={i}
+                aria-label={`Show photo ${i + 1}`}
+                aria-current={i === photo}
+                onClick={() => setPhoto(i)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  i === photo ? "w-6 bg-saffron" : "w-2 bg-espresso/25 hover:bg-espresso/45"
+                }`}
+              />
+            ))}
           </div>
+          <p className="mt-3 text-center font-sans text-xs text-muted">Tap the photo to view it full-size</p>
         </Reveal>
 
-        {/* VIDEOS — portrait reels, press to play. The reel sits on the left; a pull-quote fills the space on the right. */}
+        {/* VIDEOS — portrait reels, press to play. Reel sits on the left; a pull-quote fills the right. */}
         <Reveal className="mt-16" delay={0.1}>
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,400px)_1fr] lg:gap-16">
             {/* Left — the reel (wider, flush to the left on desktop) */}
@@ -170,11 +185,11 @@ export default function Gallery() {
               </p>
             </div>
 
-            {/* Right — editorial quote so the desktop layout never feels empty */}
+            {/* Right — editorial tagline so the desktop layout never feels empty */}
             <div className="max-w-md lg:pl-2">
               <p className="eyebrow text-muted">Videos</p>
               <blockquote className="display mt-4 text-espresso" style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}>
-                &ldquo;Every clip here is a real Madeena event.&rdquo;
+                &ldquo;Where your celebration comes alive.&rdquo;
               </blockquote>
               <p className="body-copy mt-4">
                 Weddings, receptions and functions we&apos;ve catered and styled across Malappuram.

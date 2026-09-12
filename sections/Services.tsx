@@ -33,17 +33,17 @@ export default function Services() {
                   <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/25 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 p-6 opacity-0 transition-opacity duration-300 lg:opacity-100 lg:group-hover:opacity-0">
                     <span className="font-display text-2xl text-saffron">{num}</span>
-                    <h3 className="mt-1 font-display text-2xl text-ivory">{s.title}</h3>
+                    <h3 className="mt-1 font-display text-2xl text-saffron">{s.title}</h3>
                   </div>
 
-                  {/* Detail panel — points revealed on hover (always shown on mobile, where there is no hover) */}
-                  <div className="absolute inset-0 flex flex-col justify-end bg-espresso/92 p-6 opacity-100 transition-all duration-300 lg:translate-y-3 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100 lg:group-focus-within:translate-y-0 lg:group-focus-within:opacity-100">
+                  {/* Detail panel — golden writing on a dark overlay; revealed on hover (always shown on mobile) */}
+                  <div className="absolute inset-0 flex flex-col justify-end bg-espresso/95 p-6 opacity-100 transition-all duration-300 lg:translate-y-3 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100 lg:group-focus-within:translate-y-0 lg:group-focus-within:opacity-100">
                     <span className="font-display text-xl text-saffron">{num}</span>
-                    <h3 className="mt-1 font-display text-2xl text-ivory">{s.title}</h3>
-                    <p className="mt-3 font-sans text-sm font-light leading-relaxed text-ivory/80">{s.blurb}</p>
+                    <h3 className="mt-1 font-display text-2xl text-saffron">{s.title}</h3>
+                    <p className="mt-3 font-sans text-sm font-light leading-relaxed text-[#ecd4a3]">{s.blurb}</p>
                     <ul className="mt-4 space-y-2">
                       {s.bullets.map((b) => (
-                        <li key={b} className="flex items-start gap-2 font-sans text-sm text-ivory/90">
+                        <li key={b} className="flex items-start gap-2 font-sans text-sm text-saffron">
                           <span className="mt-1 text-saffron">◆</span>
                           <span>{b}</span>
                         </li>
