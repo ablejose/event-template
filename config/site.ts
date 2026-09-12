@@ -19,8 +19,8 @@ export const site = {
   mapsLink: "https://share.google/kQWrsDqbfc63ntrxw",
   mapEmbed: "https://www.google.com/maps?q=11.019036,76.279299&z=15&output=embed",
   url: "https://madeena-catering-perintalmanna.vercel.app",
-  // TODO: replace with the business's real Instagram profile URL.
-  instagram: "https://www.instagram.com/madeenacatering/",
+  // Business Instagram profile: @madeena_catering.
+  instagram: "https://www.instagram.com/madeena_catering/",
 } as const;
 
 export const DEFAULT_WA_MESSAGE =
