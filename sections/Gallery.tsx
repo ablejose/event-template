@@ -50,13 +50,14 @@ export default function Gallery() {
           </p>
         </Reveal>
 
-        {/* PHOTOS — one big card at a time, auto-crossfading every few seconds */}
-        <Reveal className="mt-12" delay={0.05}>
+        {/* PHOTOS + VIDEOS — side by side so the section fills its width */}
+        <div className="mt-12 grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-14">
+        <Reveal delay={0.05}>
           <p className="eyebrow mb-4 text-muted">Photos</p>
           <button
             onClick={() => setActive(photo)}
             aria-label="Open photo gallery"
-            className="group relative mx-auto block w-full max-w-lg overflow-hidden rounded-brand bg-sand ring-1 ring-espresso/10 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.5)]"
+            className="group relative mx-auto block w-full max-w-md overflow-hidden rounded-brand bg-sand ring-1 ring-espresso/10 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.5)]"
             style={{ aspectRatio: "4 / 5" }}
           >
             {galleryImages.map((item, i) => (
@@ -78,7 +79,7 @@ export default function Gallery() {
           </button>
 
           {/* Caption for the current photo */}
-          <p className="mx-auto mt-4 max-w-lg text-center font-sans text-sm text-ink/80">
+          <p className="mx-auto mt-4 max-w-md text-center font-sans text-sm text-ink/80">
             {galleryImages[photo].alt}
           </p>
 
@@ -99,12 +100,11 @@ export default function Gallery() {
           <p className="mt-3 text-center font-sans text-xs text-muted">Tap the photo to view it full-size</p>
         </Reveal>
 
-        {/* VIDEOS — portrait reels, press to play. Reel sits on the left; a pull-quote fills the right. */}
-        <Reveal className="mt-16" delay={0.1}>
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,400px)_1fr] lg:gap-16">
-            {/* Left — the reel (wider, flush to the left on desktop) */}
-            <div className="w-full">
-              <div className="relative mx-auto w-full max-w-[400px] overflow-hidden rounded-brand bg-sand lg:mx-0">
+        {/* VIDEOS — portrait reels, press to play; sits beside the photo card */}
+        <Reveal delay={0.1}>
+          <p className="eyebrow mb-4 text-muted">Videos</p>
+          <div className="w-full">
+              <div className="relative mx-auto w-full max-w-[360px] overflow-hidden rounded-brand bg-sand">
                 <div
                   className="flex"
                   style={{
@@ -185,20 +185,8 @@ export default function Gallery() {
                 Use the arrows to browse · tap a clip to play with sound
               </p>
             </div>
-
-            {/* Right — editorial tagline, centred in its column so the desktop layout never feels empty */}
-            <div className="max-w-md lg:justify-self-center lg:pl-6">
-              <p className="eyebrow text-muted">Videos</p>
-              <blockquote className="display mt-4 text-espresso" style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}>
-                &ldquo;Don&apos;t just imagine it — press play.&rdquo;
-              </blockquote>
-              <p className="body-copy mt-4">
-                Real weddings, receptions and functions we&apos;ve catered and styled across
-                Malappuram — hit play and watch the day come to life.
-              </p>
-            </div>
-          </div>
         </Reveal>
+        </div>
       </div>
 
       <Lightbox items={galleryImages} index={active} onClose={() => setActive(null)} onNav={setActive} />
