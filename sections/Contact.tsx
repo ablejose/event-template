@@ -34,13 +34,12 @@ export default function Contact() {
           {/* Left — the same event image, clean on white, with quick contact facts */}
           <Reveal className="order-2 lg:order-1">
             <div className="flex h-full flex-col">
-              <figure className="overflow-hidden rounded-brand">
+              <figure className="relative min-h-[20rem] flex-1 overflow-hidden rounded-brand">
                 <Img
                   src="/images/madeena-photo-2.webp"
                   alt="Evening banquet styled, catered and managed by Madeena"
                   fallbackSeed="madeena-contact"
-                  className="h-full w-full object-cover"
-                  style={{ aspectRatio: "4 / 3" }}
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
               </figure>
               <ul className="mt-6 space-y-3">

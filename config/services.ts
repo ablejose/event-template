@@ -15,7 +15,7 @@ export const services: Service[] = [
       "Full buffet spreads for weddings, nikah and receptions — cooked fresh and served hot at any scale.",
     bullets: ["Wedding & reception buffets", "Traditional & multi-cuisine menus", "Trained serving crew"],
     icon: "UtensilsCrossed",
-    image: "/images/madeena-photo-1.webp",
+    image: "/images/service-wedding-catering.webp",
   },
   {
     id: "event-management",
@@ -24,7 +24,7 @@ export const services: Service[] = [
       "Complete event setup — stage and floral décor, lighting, seating and on-day coordination.",
     bullets: ["Stage & floral décor", "Lighting & seating", "On-day coordination"],
     icon: "PartyPopper",
-    image: "/images/g1.webp",
+    image: "/images/service-event-management.webp",
   },
   {
     id: "bulk-catering",
@@ -33,6 +33,6 @@ export const services: Service[] = [
       "Large-volume cooking for functions and gatherings, with delivery available across the area.",
     bullets: ["High-volume preparation", "Functions & house events", "Delivery available"],
     icon: "Truck",
-    image: "/images/g6.webp",
+    image: "/images/service-bulk-catering.webp",
   },
 ];

@@ -12,20 +12,21 @@ export interface GalleryVideo {
 
 /**
  * OUR WORK — IMAGES.
- * Photos shown in the right-to-left auto-scrolling strip.
- * Self-hosted under /public/images (business Google profile photos).
- * (The two client event photos WA0047/WA0048 are featured as the About section's
- *  0.8s swapping pair, so they are not repeated here.)
+ * Real event photos supplied by Madeena, self-hosted under /public/images.
+ * Shown one at a time in the auto-crossfading photo card; tap to open full-size.
  */
 export const galleryImages: GalleryItem[] = [
-  { src: "/images/g1.webp", alt: "Floral wedding stage décor by Madeena" },
-  { src: "/images/g2.webp", alt: "Fresh fruit and salad buffet spread" },
-  { src: "/images/g3.webp", alt: "Fresh juice welcome-drinks counter at an event" },
-  { src: "/images/g6.webp", alt: "Banquet hall set for a reception" },
-  { src: "/images/g5.webp", alt: "Uniformed Madeena crew serving welcome drinks" },
-  { src: "/images/g4.webp", alt: "Live tea and spice welcome-drinks station" },
-  { src: "/images/g7.webp", alt: "Cultural performance at a celebration" },
-  { src: "/images/g8.webp", alt: "Event setup and ushers at an inauguration" },
+  { src: "/images/gallery-07.webp", alt: "Floral wedding stage and mandap styled by Madeena" },
+  { src: "/images/gallery-05.webp", alt: "Banquet hall set with dressed long tables and candlelight" },
+  { src: "/images/gallery-13.webp", alt: "Buffet spread with gold chafing dishes at a function" },
+  { src: "/images/gallery-10.webp", alt: "Floral décor and hanging lanterns over a buffet counter" },
+  { src: "/images/gallery-08.webp", alt: "Floral pillars and monogram backdrop at a reception" },
+  { src: "/images/gallery-02.webp", alt: "Golden table settings laid out for a wedding feast" },
+  { src: "/images/gallery-11.webp", alt: "Floral arch and lanterns above a served buffet" },
+  { src: "/images/gallery-04.webp", alt: "Rose candelabra centrepiece on a banquet table" },
+  { src: "/images/gallery-01.webp", alt: "Large banquet hall set for a catered reception" },
+  { src: "/images/gallery-12.webp", alt: "Spacious hall set with long tables for a big function" },
+  { src: "/images/gallery-03.webp", alt: "Floral wedding welcome signboard at the entrance" },
 ];
 
 /**

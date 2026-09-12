@@ -56,8 +56,8 @@ export default function Gallery() {
           <button
             onClick={() => setActive(photo)}
             aria-label="Open photo gallery"
-            className="group relative block w-full overflow-hidden rounded-brand bg-sand"
-            style={{ aspectRatio: "16 / 10" }}
+            className="group relative mx-auto block w-full max-w-lg overflow-hidden rounded-brand bg-sand ring-1 ring-espresso/10 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.5)]"
+            style={{ aspectRatio: "4 / 5" }}
           >
             {galleryImages.map((item, i) => (
               <Img
@@ -65,21 +65,22 @@ export default function Gallery() {
                 src={item.src}
                 alt={item.alt}
                 fallbackSeed={item.src}
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 h-full w-full object-contain"
                 style={{
                   opacity: i === photo ? 1 : 0,
                   transition: `opacity ${gallerySettings.videoTransitionSeconds}s ease-in-out`,
                 }}
               />
             ))}
-            <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/10 to-transparent" />
             <span className="pointer-events-none absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-ivory/85 text-espresso opacity-0 transition-opacity duration-300 group-hover:opacity-100">
               <Maximize2 size={18} />
             </span>
-            <span className="pointer-events-none absolute inset-x-0 bottom-0 p-5 text-left font-sans text-sm text-ivory md:p-6 md:text-base">
-              {galleryImages[photo].alt}
-            </span>
           </button>
+
+          {/* Caption for the current photo */}
+          <p className="mx-auto mt-4 max-w-lg text-center font-sans text-sm text-ink/80">
+            {galleryImages[photo].alt}
+          </p>
 
           {/* Dots — jump to any photo */}
           <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
@@ -185,15 +186,15 @@ export default function Gallery() {
               </p>
             </div>
 
-            {/* Right — editorial tagline so the desktop layout never feels empty */}
-            <div className="max-w-md lg:pl-2">
+            {/* Right — editorial tagline, centred in its column so the desktop layout never feels empty */}
+            <div className="max-w-md lg:justify-self-center lg:pl-6">
               <p className="eyebrow text-muted">Videos</p>
               <blockquote className="display mt-4 text-espresso" style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}>
-                &ldquo;Where your celebration comes alive.&rdquo;
+                &ldquo;Don&apos;t just imagine it — press play.&rdquo;
               </blockquote>
               <p className="body-copy mt-4">
-                Weddings, receptions and functions we&apos;ve catered and styled across Malappuram.
-                Press play and picture your own day.
+                Real weddings, receptions and functions we&apos;ve catered and styled across
+                Malappuram — hit play and watch the day come to life.
               </p>
             </div>
           </div>
