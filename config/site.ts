@@ -18,7 +18,7 @@ export const site = {
   delivery: true,
   mapsLink: "https://share.google/kQWrsDqbfc63ntrxw",
   mapEmbed: "https://www.google.com/maps?q=11.019036,76.279299&z=15&output=embed",
-  url: "https://madeena-catering-perintalmanna.vercel.app",
+  url: "https://www.madeenaevents.in",
   // Business Instagram profile: @madeena_catering.
   instagram: "https://www.instagram.com/madeena_catering/",
 } as const;
