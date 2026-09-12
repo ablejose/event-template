@@ -52,10 +52,9 @@ export default function Gallery() {
 
         {/* PHOTOS — quote on the left, image on the right (desktop) */}
         <Reveal className="mt-12" delay={0.05}>
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14">
+          <div className="grid grid-cols-1 items-center gap-4 lg:grid-cols-2 lg:gap-14">
             <div className="order-2 max-w-md lg:order-1 lg:justify-self-center">
-              <p className="eyebrow text-muted">Photos</p>
-              <blockquote className="display mt-4 text-espresso" style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}>
+              <blockquote className="display text-espresso" style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}>
                 &ldquo;Every plate, petal and place setting — styled by hand.&rdquo;
               </blockquote>
               <p className="body-copy mt-4">
@@ -113,7 +112,7 @@ export default function Gallery() {
 
         {/* VIDEOS — video on the left, quote on the right (desktop) */}
         <Reveal className="mt-16" delay={0.1}>
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14">
+          <div className="grid grid-cols-1 items-center gap-4 lg:grid-cols-2 lg:gap-14">
             <div className="w-full">
               <div className="relative mx-auto w-full max-w-[360px] overflow-hidden rounded-brand bg-sand">
                 <div
@@ -197,8 +196,7 @@ export default function Gallery() {
               </p>
             </div>
             <div className="max-w-md lg:justify-self-center">
-              <p className="eyebrow text-muted">Videos</p>
-              <blockquote className="display mt-4 text-espresso" style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}>
+              <blockquote className="display text-espresso" style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}>
                 &ldquo;Don&apos;t just imagine it — press play.&rdquo;
               </blockquote>
               <p className="body-copy mt-4">
