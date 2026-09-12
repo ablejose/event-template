@@ -6,9 +6,10 @@ import { waLink } from "@/config/site";
 /**
  * PROCESS TRUST — "How we work".
  * Turns "they make beautiful events" into "they have a system for delivering them".
- * Steps describe Madeena's actual catering + event-management flow (menu, décor,
- * logistics, fresh cooking, on-ground service). Do not add capabilities the
- * business does not actually offer.
+ * Styled like the "What we do" (Services) section: white background, cream cards,
+ * same fonts/sizes — with golden (saffron) headings and step titles.
+ * Steps describe Madeena's actual catering + event-management flow. Do not add
+ * capabilities the business does not actually offer.
  */
 const steps = [
   {
@@ -40,33 +41,31 @@ const steps = [
 
 export default function Process() {
   return (
-    <section id="process" aria-labelledby="process-heading" className="bg-espresso py-16 md:py-24">
+    <section id="process" aria-labelledby="process-heading" className="bg-white py-12 md:py-16">
       <div className="mx-auto max-w-shell px-6">
         <Reveal>
-          <p className="eyebrow text-saffron">How we work</p>
+          <p className="eyebrow">How we work</p>
           <h2
             id="process-heading"
-            className="display mt-4 max-w-3xl text-ivory"
+            className="display mt-4 max-w-3xl text-saffron-2"
             style={{ fontSize: "clamp(1.9rem, 3.6vw, 3rem)" }}
           >
             One team, from the first message to the last plate.
           </h2>
-          <p className="mt-4 max-w-xl font-sans text-base font-light leading-relaxed text-ivory/70">
+          <p className="body-copy mt-4 max-w-xl">
             Catering and event management handled together, by one team — so the food, the décor and
             the day all run as one.
           </p>
         </Reveal>
 
-        <ol className="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-brand border border-ivory/12 bg-ivory/12 sm:grid-cols-2 lg:grid-cols-5">
+        <ol className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {steps.map((s, i) => (
             <Reveal as="li" key={s.n} delay={i * 0.08} className="h-full">
-              <div className="flex h-full flex-col bg-espresso p-6 md:p-7">
+              <div className="flex h-full flex-col rounded-brand border border-sand bg-cream p-6 transition-all duration-300 hover:-translate-y-1 hover:border-saffron hover:shadow-[0_20px_44px_-24px_rgba(122,46,42,0.35)]">
                 <span className="font-display text-3xl text-saffron">{s.n}</span>
                 <span className="mt-4 h-px w-8 bg-saffron/50" />
-                <h3 className="mt-4 font-display text-xl text-ivory">{s.title}</h3>
-                <p className="mt-2 font-sans text-sm font-light leading-relaxed text-ivory/70">
-                  {s.text}
-                </p>
+                <h3 className="mt-4 font-display text-xl text-saffron-2">{s.title}</h3>
+                <p className="body-copy mt-2">{s.text}</p>
               </div>
             </Reveal>
           ))}
@@ -77,7 +76,7 @@ export default function Process() {
             <Button href={waLink()} variant="whatsapp" external>
               <WhatsAppIcon size={18} /> Plan your event
             </Button>
-            <p className="font-sans text-sm text-ivory/60">
+            <p className="font-sans text-sm text-muted">
               Tell us your date and guest count — we&apos;ll reply with a menu and a clear quote.
             </p>
           </div>

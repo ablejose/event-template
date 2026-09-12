@@ -10,8 +10,8 @@ import { galleryImages, galleryVideos, gallerySettings } from "@/config/gallery"
 export default function Gallery() {
   const [active, setActive] = useState<number | null>(null); // lightbox index
   const [slide, setSlide] = useState(0);
-  // The first video plays on open; the rest are only mounted/played after a click.
-  const [played, setPlayed] = useState<Set<number>>(() => new Set([0]));
+  // Every video is press-to-play — nothing autoplays; a clip only mounts/plays after a click.
+  const [played, setPlayed] = useState<Set<number>>(() => new Set());
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   const total = galleryVideos.length;
@@ -83,89 +83,105 @@ export default function Gallery() {
           </div>
         </Reveal>
 
-        {/* VIDEOS — portrait reels; first autoplays, others load on click behind a poster */}
-        <Reveal className="mt-14" delay={0.1}>
-          <p className="eyebrow mb-4 text-muted">Videos</p>
-          <div className="relative mx-auto w-full max-w-[330px] overflow-hidden rounded-brand bg-espresso">
-            <div
-              className="flex"
-              style={{
-                transform: `translateX(-${slide * 100}%)`,
-                transition: `transform ${gallerySettings.videoTransitionSeconds}s cubic-bezier(0.22, 1, 0.36, 1)`,
-              }}
-            >
-              {galleryVideos.map((v, i) => (
-                <div key={`${v.src}-${i}`} className="relative w-full shrink-0" style={{ aspectRatio: "9 / 16" }}>
-                  {played.has(i) ? (
-                    <video
-                      ref={(el) => {
-                        videoRefs.current[i] = el;
-                      }}
-                      className="h-full w-full object-cover"
-                      autoPlay
-                      muted={i === 0}
-                      loop={i === 0}
-                      controls={i !== 0}
-                      playsInline
-                      preload="auto"
-                      poster={v.poster}
-                      aria-label={v.alt}
-                    >
-                      <source src={v.src} type="video/mp4" />
-                    </video>
-                  ) : (
-                    <button
-                      onClick={() => play(i)}
-                      aria-label={`Play video: ${v.alt}`}
-                      className="group relative block h-full w-full"
-                    >
-                      <Img src={v.poster!} alt={v.alt} fallbackSeed={v.src} className="h-full w-full object-cover" />
-                      <span className="absolute inset-0 bg-ink/25 transition-colors duration-300 group-hover:bg-ink/10" />
-                      <span className="absolute left-1/2 top-1/2 grid h-16 w-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-ivory/90 text-espresso shadow-[0_10px_30px_-8px_rgba(0,0,0,0.6)] transition-transform duration-300 group-hover:scale-105">
-                        <Play size={26} className="ml-0.5" fill="currentColor" />
-                      </span>
-                    </button>
-                  )}
+        {/* VIDEOS — portrait reels, press to play. On desktop a pull-quote fills the space beside the reel. */}
+        <Reveal className="mt-16" delay={0.1}>
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1fr_330px] lg:gap-16">
+            {/* Left — editorial quote so the desktop layout never feels empty */}
+            <div className="max-w-md">
+              <p className="eyebrow text-muted">Videos</p>
+              <blockquote className="display mt-4 text-espresso" style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}>
+                &ldquo;Every clip here is a real Madeena event.&rdquo;
+              </blockquote>
+              <p className="body-copy mt-4">
+                Weddings, receptions and functions we&apos;ve catered and styled across Malappuram.
+                Press play and picture your own day.
+              </p>
+            </div>
+
+            {/* Right — the reel */}
+            <div className="w-full">
+              <div className="relative mx-auto w-full max-w-[330px] overflow-hidden rounded-brand bg-sand">
+                <div
+                  className="flex"
+                  style={{
+                    transform: `translateX(-${slide * 100}%)`,
+                    transition: `transform ${gallerySettings.videoTransitionSeconds}s cubic-bezier(0.22, 1, 0.36, 1)`,
+                  }}
+                >
+                  {galleryVideos.map((v, i) => (
+                    <div key={`${v.src}-${i}`} className="relative w-full shrink-0" style={{ aspectRatio: "9 / 16" }}>
+                      {played.has(i) ? (
+                        <video
+                          ref={(el) => {
+                            videoRefs.current[i] = el;
+                          }}
+                          className="h-full w-full object-cover"
+                          autoPlay
+                          controls
+                          playsInline
+                          preload="auto"
+                          poster={v.poster}
+                          aria-label={v.alt}
+                        >
+                          <source src={v.src} type="video/mp4" />
+                        </video>
+                      ) : (
+                        <button
+                          onClick={() => play(i)}
+                          aria-label={`Play video: ${v.alt}`}
+                          className="group relative block h-full w-full"
+                        >
+                          <Img src={v.poster!} alt={v.alt} fallbackSeed={v.src} className="h-full w-full object-cover" />
+                          <span className="absolute inset-0 bg-ink/25 transition-colors duration-300 group-hover:bg-ink/10" />
+                          <span className="absolute left-1/2 top-1/2 grid h-16 w-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-ivory/90 text-espresso shadow-[0_10px_30px_-8px_rgba(0,0,0,0.6)] transition-transform duration-300 group-hover:scale-105">
+                            <Play size={26} className="ml-0.5" fill="currentColor" />
+                          </span>
+                        </button>
+                      )}
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
 
-            {total > 1 && (
-              <>
-                <button
-                  aria-label="Previous video"
-                  onClick={() => go(-1)}
-                  className="absolute left-3 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-ivory/30 bg-ink/40 text-ivory backdrop-blur transition-colors hover:bg-ink/60"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                <button
-                  aria-label="Next video"
-                  onClick={() => go(1)}
-                  className="absolute right-3 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-ivory/30 bg-ink/40 text-ivory backdrop-blur transition-colors hover:bg-ink/60"
-                >
-                  <ChevronRight size={20} />
-                </button>
-              </>
-            )}
+              {/* Controls sit BELOW the reel so they clearly read as "go to next video" */}
+              {total > 1 && (
+                <div className="mt-5 flex items-center justify-center gap-5">
+                  <button
+                    aria-label="Previous video"
+                    onClick={() => go(-1)}
+                    className="grid h-11 w-11 place-items-center rounded-full border border-sand text-espresso transition-all duration-300 hover:-translate-y-0.5 hover:border-saffron hover:bg-[var(--saffron-soft)]"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+
+                  <div className="flex items-center gap-2">
+                    {galleryVideos.map((_, i) => (
+                      <button
+                        key={i}
+                        aria-label={`Go to video ${i + 1}`}
+                        aria-current={i === slide}
+                        onClick={() => setSlide(i)}
+                        className={`h-2 rounded-full transition-all duration-300 ${
+                          i === slide ? "w-6 bg-saffron" : "w-2 bg-espresso/25 hover:bg-espresso/45"
+                        }`}
+                      />
+                    ))}
+                  </div>
+
+                  <button
+                    aria-label="Next video"
+                    onClick={() => go(1)}
+                    className="grid h-11 w-11 place-items-center rounded-full border border-sand text-espresso transition-all duration-300 hover:-translate-y-0.5 hover:border-saffron hover:bg-[var(--saffron-soft)]"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                </div>
+              )}
+              <p className="mt-3 text-center font-sans text-xs text-muted">
+                Use the arrows to browse · tap a clip to play with sound
+              </p>
+            </div>
           </div>
-
-          {total > 1 && (
-            <div className="mt-4 flex items-center justify-center gap-2">
-              {galleryVideos.map((_, i) => (
-                <button
-                  key={i}
-                  aria-label={`Go to video ${i + 1}`}
-                  aria-current={i === slide}
-                  onClick={() => setSlide(i)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    i === slide ? "w-6 bg-saffron" : "w-2 bg-espresso/25 hover:bg-espresso/45"
-                  }`}
-                />
-              ))}
-            </div>
-          )}
-          <p className="mt-2 text-center font-sans text-xs text-muted">Tap a clip to play with sound</p>
         </Reveal>
       </div>
 
