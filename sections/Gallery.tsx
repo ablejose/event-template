@@ -50,10 +50,19 @@ export default function Gallery() {
           </p>
         </Reveal>
 
-        {/* PHOTOS + VIDEOS — side by side so the section fills its width */}
-        <div className="mt-12 grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-14">
-        <Reveal delay={0.05}>
-          <p className="eyebrow mb-4 text-muted">Photos</p>
+        {/* PHOTOS — quote on the left, image on the right (desktop) */}
+        <Reveal className="mt-12" delay={0.05}>
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14">
+            <div className="order-2 max-w-md lg:order-1 lg:justify-self-center">
+              <p className="eyebrow text-muted">Photos</p>
+              <blockquote className="display mt-4 text-espresso" style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}>
+                &ldquo;Every plate, petal and place setting — styled by hand.&rdquo;
+              </blockquote>
+              <p className="body-copy mt-4">
+                A closer look at the spreads, stages and tables we create on the day — tap any photo to see it full-size.
+              </p>
+            </div>
+            <div className="order-1 lg:order-2">
           <button
             onClick={() => setActive(photo)}
             aria-label="Open photo gallery"
@@ -98,12 +107,14 @@ export default function Gallery() {
             ))}
           </div>
           <p className="mt-3 text-center font-sans text-xs text-muted">Tap the photo to view it full-size</p>
+            </div>
+          </div>
         </Reveal>
 
-        {/* VIDEOS — portrait reels, press to play; sits beside the photo card */}
-        <Reveal delay={0.1}>
-          <p className="eyebrow mb-4 text-muted">Videos</p>
-          <div className="w-full">
+        {/* VIDEOS — video on the left, quote on the right (desktop) */}
+        <Reveal className="mt-16" delay={0.1}>
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14">
+            <div className="w-full">
               <div className="relative mx-auto w-full max-w-[360px] overflow-hidden rounded-brand bg-sand">
                 <div
                   className="flex"
@@ -185,8 +196,17 @@ export default function Gallery() {
                 Use the arrows to browse · tap a clip to play with sound
               </p>
             </div>
+            <div className="max-w-md lg:justify-self-center">
+              <p className="eyebrow text-muted">Videos</p>
+              <blockquote className="display mt-4 text-espresso" style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}>
+                &ldquo;Don&apos;t just imagine it — press play.&rdquo;
+              </blockquote>
+              <p className="body-copy mt-4">
+                Real weddings, receptions and functions across Malappuram — hit play and watch the day come to life.
+              </p>
+            </div>
+          </div>
         </Reveal>
-        </div>
       </div>
 
       <Lightbox items={galleryImages} index={active} onClose={() => setActive(null)} onNav={setActive} />
