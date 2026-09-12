@@ -68,12 +68,12 @@ export default function Contact() {
           {/* Left — the same event image, clean on white, with quick contact facts */}
           <Reveal className="order-2 lg:order-1">
             <div className="flex h-full flex-col">
-              <figure className="relative min-h-[20rem] flex-1 overflow-hidden rounded-brand">
+              <figure className="relative min-h-[20rem] flex-1 overflow-hidden rounded-brand bg-white ring-1 ring-sand">
                 <Img
-                  src="/images/madeena-photo-2.webp"
-                  alt="Evening banquet styled, catered and managed by Madeena"
+                  src="/images/plan-your-event.webp"
+                  alt="Illustration of a wedding planner guiding a couple under a floral arch"
                   fallbackSeed="madeena-contact"
-                  className="absolute inset-0 h-full w-full object-cover"
+                  className="absolute inset-0 h-full w-full object-contain p-4"
                 />
               </figure>
               <ul className="mt-6 space-y-3">
