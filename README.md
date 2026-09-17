@@ -13,6 +13,9 @@ export const event = madeena;
 ```
 
 Full instructions: **[EVENT-SETUP.md](./EVENT-SETUP.md)**
+Keeping each build feeling custom: **[IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md)**
+
+Live demo (dummy data): https://event-template-demo.vercel.app
 
 ## Architecture
 
