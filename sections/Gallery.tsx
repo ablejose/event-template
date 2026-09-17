@@ -6,6 +6,8 @@ import Reveal from "@/components/Reveal";
 import { Img } from "@/components/ui/Img";
 import Lightbox from "@/components/Lightbox";
 import { galleryImages, galleryVideos, gallerySettings } from "@/config/gallery";
+import { copy } from "@/config/site";
+import { t } from "@/lib/copy";
 
 export default function Gallery() {
   const [active, setActive] = useState<number | null>(null); // lightbox index
@@ -23,7 +25,7 @@ export default function Gallery() {
   // Paused while the lightbox is open.
   useEffect(() => {
     if (active !== null) return;
-    const id = setInterval(() => setPhoto((p) => (p + 1) % galleryImages.length), 3200);
+    const id = setInterval(() => setPhoto((p) => (p + 1) % galleryImages.length), gallerySettings.photoIntervalMs);
     return () => clearInterval(id);
   }, [active]);
 
@@ -40,14 +42,11 @@ export default function Gallery() {
     <section id="gallery" aria-labelledby="gallery-heading" className="bg-white py-12 md:py-16">
       <div className="mx-auto max-w-shell px-6">
         <Reveal>
-          <p className="eyebrow">Our work</p>
+          <p className="eyebrow">{copy.gallery.eyebrow}</p>
           <h2 id="gallery-heading" className="display mt-4" style={{ fontSize: "clamp(1.9rem, 3.4vw, 3rem)" }}>
-            Imagine your event like this
+            {copy.gallery.heading}
           </h2>
-          <p className="body-copy mt-4 max-w-xl">
-            Real weddings and functions we&apos;ve catered and styled across Malappuram — the spreads,
-            the stage and the crowd on the day.
-          </p>
+          <p className="body-copy mt-4 max-w-xl">{t(copy.gallery.body)}</p>
         </Reveal>
 
         {/* PHOTOS — quote on the left, image on the right (desktop) */}
@@ -55,11 +54,9 @@ export default function Gallery() {
           <div className="grid grid-cols-1 items-center gap-4 lg:grid-cols-2 lg:gap-14">
             <div className="order-2 max-w-md lg:order-1 lg:justify-self-center">
               <blockquote className="display text-espresso" style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}>
-                &ldquo;Every plate, petal and place setting — styled by hand.&rdquo;
+                &ldquo;{t(copy.gallery.photoQuote)}&rdquo;
               </blockquote>
-              <p className="body-copy mt-4">
-                A closer look at the spreads, stages and tables we create on the day — tap any photo to see it full-size.
-              </p>
+              <p className="body-copy mt-4">{t(copy.gallery.photoBody)}</p>
             </div>
             <div className="order-1 lg:order-2">
           <button
@@ -105,12 +102,13 @@ export default function Gallery() {
               />
             ))}
           </div>
-          <p className="mt-3 text-center font-sans text-xs text-muted">Tap the photo to view it full-size</p>
+          <p className="mt-3 text-center font-sans text-xs text-muted">{copy.gallery.photoHint}</p>
             </div>
           </div>
         </Reveal>
 
-        {/* VIDEOS — video on the left, quote on the right (desktop) */}
+        {/* VIDEOS — video on the left, quote on the right (desktop). Hidden when an event has no reels. */}
+        {total > 0 && (
         <Reveal className="mt-16" delay={0.1}>
           <div className="grid grid-cols-1 items-center gap-4 lg:grid-cols-2 lg:gap-14">
             <div className="w-full">
@@ -191,20 +189,17 @@ export default function Gallery() {
                   </button>
                 </div>
               )}
-              <p className="mt-3 text-center font-sans text-xs text-muted">
-                Use the arrows to browse · tap a clip to play with sound
-              </p>
+              <p className="mt-3 text-center font-sans text-xs text-muted">{copy.gallery.videoHint}</p>
             </div>
             <div className="max-w-md lg:justify-self-center">
               <blockquote className="display text-espresso" style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}>
-                &ldquo;Don&apos;t just imagine it — press play.&rdquo;
+                &ldquo;{t(copy.gallery.videoQuote)}&rdquo;
               </blockquote>
-              <p className="body-copy mt-4">
-                Real weddings, receptions and functions across Malappuram — hit play and watch the day come to life.
-              </p>
+              <p className="body-copy mt-4">{t(copy.gallery.videoBody)}</p>
             </div>
           </div>
         </Reveal>
+        )}
       </div>
 
       <Lightbox items={galleryImages} index={active} onClose={() => setActive(null)} onNav={setActive} />

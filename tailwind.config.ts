@@ -6,6 +6,8 @@ const config: Config = {
     "./components/**/*.{ts,tsx}",
     "./sections/**/*.{ts,tsx}",
     "./config/**/*.{ts,tsx}",
+    "./events/**/*.{ts,tsx}",
+    "./event.config.ts",
   ],
   theme: {
     extend: {

@@ -1,2 +1,61 @@
-# madeena-catering-perintalmanna
-Madeena Catering &amp; Event Management, Perintalmanna — official website.
+# event-template
+
+Reusable **catering / event-management website template** (Next.js 14 · TypeScript ·
+Tailwind · GSAP/Motion). One codebase, many clients: all personal data sits in a
+single per-event file, everything reusable stays in the template.
+
+## Swap an event in one file
+
+```ts
+// event.config.ts
+import { madeena } from "@/events/madeena.config";
+export const event = madeena;
+```
+
+Full instructions: **[EVENT-SETUP.md](./EVENT-SETUP.md)**
+
+## Architecture
+
+```
+event.config.ts            <- THE ONE FILE TO SWAP (points at an event)
+events/
+  madeena.config.ts        <- personal data for one client
+  _new-event.config.ts     <- starter to copy
+config/
+  event-schema.ts          <- shape of an event (types + rules)
+  template.ts              <- SHARED copy: what we do, how we work, headings, CTAs
+  site.ts                  <- derived: flat `site`, waLink, telLink, nav, brand assets
+  services.ts              <- derived: shared cards (+ per-event overrides)
+  process.ts               <- derived: shared steps (+ per-event overrides)
+  gallery.ts               <- derived: their photos/reels, resolved to media.base
+  reviews.ts               <- derived: their real reviews
+  seo.ts                   <- derived: metadata + schema.org LocalBusiness
+lib/copy.ts                <- {token} fill + media path resolver
+app/                       <- layout (metadata), page, sitemap, robots, manifest
+sections/                  <- Hero, TrustBar, Services, Gallery, Process, About,
+                              Testimonials, Contact, Instagram, Footer
+components/                <- Header, Loader, Lightbox, Reveal, SmoothScroll, WhatsAppFab, ui/
+public/
+  template/                <- stock art shared by every event
+  events/<slug>/           <- ONLY that client's photos, reels, OG image, favicons
+```
+
+Data flows one way: `events/<slug>.config.ts` -> `event.config.ts` -> `config/*`
+-> sections. No section or component contains a business name, town, phone
+number or asset path.
+
+## Develop
+
+```bash
+npm install
+npm run dev          # http://localhost:3000
+npm run type-check
+npm run build
+```
+
+Optional env (see `.env.example`): `NEXT_PUBLIC_WHATSAPP_NUMBER`,
+`NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`.
+
+## Live builds from this template
+
+- Madeena Catering & Event Management, Perintalmanna — `events/madeena.config.ts`

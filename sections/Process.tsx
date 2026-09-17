@@ -2,26 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import Reveal from "@/components/Reveal";
+import { processSteps as steps } from "@/config/process";
+import { copy } from "@/config/site";
+import { t } from "@/lib/copy";
 
 /**
- * PROCESS TRUST — "How we work".
- * White background, golden headings.
- * Desktop: when the row scrolls into view, a black fill sweeps left-to-right
- * across the connecting line while the number badges turn black in sequence.
- * Mobile: each number badge turns black as its own step scrolls into view, so
- * the animation plays with the scroll. Steps describe Madeena's actual catering
- * + event-management flow; do not add capabilities the business does not offer.
+ * PROCESS TRUST — "How we work". Template-level content (config/template.ts):
+ * the same flow works for every catering/event client, so a new event inherits
+ * it. Override per event only when the workflow genuinely differs.
  */
-const steps = [
-  { n: "01", title: "Understand", text: "We start with your date, guest count, venue and the kind of day you have in mind." },
-  { n: "02", title: "Menu & concept", text: "We shape the menu and the look — buffet spread, live counters, stage and floral décor." },
-  { n: "03", title: "Plan & coordinate", text: "We lock quantities, timeline, staffing and logistics so nothing is left to the last minute." },
-  { n: "04", title: "Cook fresh & set up", text: "Food is cooked fresh on the day while our team sets up counters, seating and décor." },
-  { n: "05", title: "Serve & manage", text: "Trained crew serve hot and keep the day running — so you get to enjoy the occasion." },
-];
-
-const STEP_DELAY = 0.45; // seconds between each number colouring black (desktop sweep)
-const LINE_DURATION = (steps.length - 1) * STEP_DELAY + 0.5;
+const STEP_DELAY = 0.45; // seconds between each badge turning black (desktop sweep)
 
 export default function Process() {
   const olRef = useRef<HTMLOListElement | null>(null);
@@ -29,6 +19,8 @@ export default function Process() {
   const [activeSteps, setActiveSteps] = useState<boolean[]>(() => steps.map(() => false));
   const [lineActive, setLineActive] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+
+  const lineDuration = (steps.length - 1) * STEP_DELAY + 0.5;
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -41,7 +33,6 @@ export default function Process() {
     setIsDesktop(desktop);
 
     if (desktop) {
-      // Whole-row trigger: colour every badge (staggered) and sweep the line.
       const node = olRef.current;
       if (!node) return;
       const io = new IntersectionObserver(
@@ -60,7 +51,6 @@ export default function Process() {
       return () => io.disconnect();
     }
 
-    // Mobile / tablet: colour each badge as its own step scrolls into view.
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -84,23 +74,19 @@ export default function Process() {
     <section id="process" aria-labelledby="process-heading" className="bg-white py-12 md:py-16">
       <div className="mx-auto max-w-shell px-6">
         <Reveal>
-          <p className="eyebrow">How we work</p>
+          <p className="eyebrow">{copy.process.eyebrow}</p>
           <h2 id="process-heading" className="display mt-4 max-w-3xl text-saffron-2" style={{ fontSize: "clamp(1.9rem, 3.6vw, 3rem)" }}>
-            One team, from the first message to the last plate.
+            {copy.process.heading}
           </h2>
-          <p className="body-copy mt-4 max-w-xl">
-            Catering and event management handled together, by one team — so the food, the décor and
-            the day all run as one.
-          </p>
+          <p className="body-copy mt-4 max-w-xl">{t(copy.process.body)}</p>
         </Reveal>
 
         <ol ref={olRef} className="relative mt-14 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
-          {/* Connecting line: sand base + black fill that sweeps across when in view (desktop) */}
           <div aria-hidden className="pointer-events-none absolute left-0 right-0 top-8 hidden h-px bg-sand lg:block" />
           <div
             aria-hidden
             className="pointer-events-none absolute left-0 top-8 hidden h-px bg-ink lg:block"
-            style={{ width: lineActive ? "100%" : "0%", transition: `width ${LINE_DURATION}s ease-out` }}
+            style={{ width: lineActive ? "100%" : "0%", transition: `width ${lineDuration}s ease-out` }}
           />
           {steps.map((s, i) => (
             <li
@@ -121,7 +107,7 @@ export default function Process() {
                   {s.n}
                 </span>
                 <h3 className="mt-5 font-display text-xl text-saffron-2">{s.title}</h3>
-                <p className="body-copy mt-2">{s.text}</p>
+                <p className="body-copy mt-2">{t(s.text)}</p>
               </div>
             </li>
           ))}

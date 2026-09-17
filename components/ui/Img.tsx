@@ -26,7 +26,7 @@ export function Img({
   priority?: boolean;
 } & Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src" | "alt" | "className">) {
   const [errored, setErrored] = useState(false);
-  const seed = encodeURIComponent(fallbackSeed || alt || "madeena");
+  const seed = encodeURIComponent(fallbackSeed || alt || "event");
   const fallback = `https://picsum.photos/seed/${seed}/${width}/${height}`;
   return (
     // eslint-disable-next-line @next/next/no-img-element

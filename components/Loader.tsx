@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { site } from "@/config/site";
 
 /**
- * Intro loading screen: a black overlay with the brand title in the hero font
- * (Madeena in gold, "Catering & Event Management" in white), which fades out to
+ * Intro loading screen: a black overlay with the brand name in gold and the
+ * descriptor in white — both read from the active event config — fading out to
  * reveal the site. Locks scroll while visible; honours prefers-reduced-motion.
  */
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -41,7 +42,7 @@ export default function Loader() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: EASE }}
           >
-            Madeena
+            {site.name}
           </motion.span>
           <motion.span
             className="display mt-2"
@@ -50,7 +51,7 @@ export default function Loader() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.25, ease: EASE }}
           >
-            Catering &amp; Event Management
+            {site.descriptor}
           </motion.span>
           <motion.span
             className="mt-6 block h-px"

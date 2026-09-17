@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { Menu, X, Phone } from "lucide-react";
-import { site, navLinks, telLink, waLink } from "@/config/site";
+import { site, navLinks, telLink, waLink, copy } from "@/config/site";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
@@ -73,10 +73,10 @@ export default function Header() {
       <div className="mx-auto flex max-w-shell items-center justify-between px-5 py-4 md:px-8">
         <Link href="/" className="flex flex-col leading-none" aria-label={`${site.fullName} home`}>
           <span className={cn("font-display text-2xl tracking-wide transition-colors", solid ? "text-espresso" : "text-ivory")}>
-            Madeena
+            {site.name}
           </span>
           <span className={cn("mt-0.5 font-sans text-[0.6rem] uppercase tracking-[0.24em] transition-colors", solid ? "text-saffron-2" : "text-ivory/70")}>
-            Catering &amp; Events
+            {site.kicker}
           </span>
         </Link>
 
@@ -104,7 +104,7 @@ export default function Header() {
             <Phone size={16} />
           </a>
           <Button href={waLink()} variant="primary" external>
-            Plan your event
+            {copy.cta.primary}
           </Button>
         </div>
 
@@ -144,7 +144,7 @@ export default function Header() {
               transition={{ type: "tween", ease: [0.22, 1, 0.36, 1], duration: 0.5 }}
             >
               <div className="flex items-center justify-between">
-                <span className="font-display text-2xl">Madeena</span>
+                <span className="font-display text-2xl">{site.name}</span>
                 <button aria-label="Close menu" onClick={() => setOpen(false)} className="grid h-10 w-10 place-items-center rounded-full text-ivory">
                   <X size={22} />
                 </button>
@@ -160,7 +160,7 @@ export default function Header() {
               </nav>
               <div className="mt-auto flex flex-col gap-3">
                 <Button href={waLink()} variant="whatsapp" external onClick={() => setOpen(false)}>
-                  Chat on WhatsApp
+                  {copy.cta.whatsapp}
                 </Button>
                 <Button href={telLink} variant="outline" className="border-ivory/50 text-ivory" onClick={() => setOpen(false)}>
                   Call {site.phone}

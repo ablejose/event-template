@@ -4,47 +4,42 @@ import { useEffect, useState } from "react";
 import { Star, Clock, Truck, MapPin } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import { Img } from "@/components/ui/Img";
-import { site } from "@/config/site";
+import { copy, event, site } from "@/config/site";
+import { aboutImages, gallerySettings } from "@/config/gallery";
+import { t, tAll } from "@/lib/copy";
 
-// About feature image pair — auto-swaps with a 0.8s crossfade.
-const aboutImages = [
-  { src: "/images/madeena-photo-1.webp", alt: "Grand indoor banquet set with gold chairs and chandelier, styled by Madeena" },
-  { src: "/images/madeena-photo-2.webp", alt: "Outdoor evening banquet with floral table styling by Madeena" },
-];
+const POINT_ICONS = [Clock, Truck, MapPin];
 
 export default function About() {
   const points = [
     { icon: Star, text: `${site.rating.toFixed(1)}\u2605 on Google (${site.reviews} reviews)` },
-    { icon: Clock, text: "Open 24 hours, all days" },
-    { icon: Truck, text: "Delivery available" },
-    { icon: MapPin, text: "Serving Perintalmanna & Malappuram" },
+    ...tAll(copy.about.points).map((text, i) => ({ icon: POINT_ICONS[i % POINT_ICONS.length], text })),
   ];
 
   const [idx, setIdx] = useState(0);
   useEffect(() => {
-    const t = setInterval(() => setIdx((i) => (i + 1) % aboutImages.length), 3800);
-    return () => clearInterval(t);
+    if (aboutImages.length < 2) return;
+    const ms = gallerySettings.aboutIntervalMs;
+    const timer = setInterval(() => setIdx((i) => (i + 1) % aboutImages.length), ms);
+    return () => clearInterval(timer);
   }, []);
+
+  const body = t(event.overrides?.aboutBody ?? copy.about.body);
 
   return (
     <section id="about" aria-labelledby="about-heading" className="bg-white py-12 md:py-16">
       <div className="mx-auto grid max-w-shell grid-cols-1 items-center gap-12 px-6 lg:grid-cols-2">
         <Reveal>
           <div>
-            <p className="eyebrow">About us</p>
+            <p className="eyebrow">{copy.about.eyebrow}</p>
             <h2 id="about-heading" className="display mt-4" style={{ fontSize: "clamp(1.8rem, 3.2vw, 2.8rem)" }}>
-              Feasts and functions, handled with{" "}
+              {copy.about.headingLead}{" "}
               <span className="italic" style={{ color: "var(--saffron)" }}>
-                care.
+                {copy.about.headingAccent}
               </span>
             </h2>
             <span className="my-5 block h-px w-16" style={{ background: "var(--saffron)" }} />
-            <p className="body-copy">
-              Madeena Catering &amp; Event Management is based in Thelakkad, Perintalmanna. From
-              weddings and receptions to house functions and inaugurations, we handle the whole
-              day — fresh food and buffets, live counters, floral and stage décor, and on-ground
-              coordination. Cooked fresh, served hot, and managed so you can enjoy the occasion.
-            </p>
+            <p className="body-copy">{body}</p>
             <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {points.map((p) => (
                 <li key={p.text} className="flex items-center gap-3 font-sans text-sm text-ink/85">
@@ -61,7 +56,7 @@ export default function About() {
               rel="noopener noreferrer"
               className="link-underline mt-6 inline-flex items-center gap-2 font-sans text-sm font-medium text-espresso"
             >
-              <Star size={15} className="fill-saffron text-saffron" /> Read our {site.reviews} reviews on Google
+              <Star size={15} className="fill-saffron text-saffron" /> {t(copy.about.reviewsLink)}
             </a>
           </div>
         </Reveal>

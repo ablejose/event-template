@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Phone, MapPin, Clock, Navigation, Star } from "lucide-react";
+import { Phone, MapPin, Navigation, Star } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import { Img } from "@/components/ui/Img";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
-import { site, waLink, telLink } from "@/config/site";
+import { copy, site, waLink, telLink } from "@/config/site";
+import { t } from "@/lib/copy";
 
 export default function Contact() {
   const [f, setF] = useState({ email: "", phone: "", address: "", message: "" });
@@ -15,7 +16,7 @@ export default function Contact() {
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     const text =
-      "Hi Madeena Catering, I'd like to plan an event." +
+      t(copy.cta.waFormIntro) +
       (f.message ? `\n\n${f.message}` : "") +
       (f.phone ? `\n\nPhone: ${f.phone}` : "") +
       (f.email ? `\nEmail: ${f.email}` : "") +
@@ -28,7 +29,7 @@ export default function Contact() {
     "mt-2 w-full rounded-2xl border border-sand bg-white px-4 py-3 font-sans text-sm text-ink outline-none transition-colors placeholder:text-muted/70 focus:border-saffron";
 
   // Typewriter reveal for the heading — "writes" the text when the section scrolls into view.
-  const headingText = "Let's plan your event together.";
+  const headingText = copy.contact.heading;
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const [typed, setTyped] = useState(0);
   const startedRef = useRef(false);
@@ -59,27 +60,29 @@ export default function Contact() {
     );
     io.observe(node);
     return () => io.disconnect();
-  }, []);
+  }, [headingText]);
+
+  const fields = copy.contact.fields;
 
   return (
     <section id="contact" aria-labelledby="contact-heading" className="bg-white py-12 md:py-16">
       <div className="mx-auto max-w-shell px-6">
         <div className="grid grid-cols-1 items-stretch gap-10 lg:grid-cols-2 lg:gap-14">
-          {/* Left — the same event image, clean on white, with quick contact facts */}
+          {/* Left — template illustration + this event's contact facts */}
           <Reveal className="order-2 lg:order-1">
             <div className="flex h-full flex-col">
               <figure className="relative min-h-[20rem] flex-1">
                 <Img
-                  src="/images/plan-your-event.webp"
-                  alt="Illustration of a wedding planner guiding a couple under a floral arch"
-                  fallbackSeed="madeena-contact"
+                  src={copy.contact.image}
+                  alt={copy.contact.imageAlt}
+                  fallbackSeed="contact-illustration"
                   className="absolute inset-0 h-full w-full object-contain"
                 />
               </figure>
               <ul className="mt-6 space-y-3">
                 <li className="flex items-center gap-3 font-sans text-sm text-ink/85">
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[var(--saffron-soft)] text-saffron-2"><Star size={16} className="fill-saffron text-saffron" /></span>
-                  Rated {site.rating.toFixed(1)} on Google · {site.reviews} reviews · Open 24 hours
+                  {t(copy.contact.ratingLine)}
                 </li>
                 <li className="flex items-start gap-3 font-sans text-sm text-ink/85">
                   <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[var(--saffron-soft)] text-saffron-2"><MapPin size={16} /></span>
@@ -90,7 +93,7 @@ export default function Contact() {
                     <Phone size={15} /> {site.phone}
                   </a>
                   <a href={site.mapsLink} target="_blank" rel="noopener noreferrer" className="link-underline inline-flex items-center gap-2 font-sans text-sm font-medium text-espresso">
-                    <Navigation size={15} /> Get directions
+                    <Navigation size={15} /> {copy.contact.directions}
                   </a>
                 </li>
               </ul>
@@ -100,7 +103,7 @@ export default function Contact() {
           {/* Right — enquiry form (composes a WhatsApp message; no backend needed) */}
           <Reveal delay={0.1} className="order-1 lg:order-2">
             <div>
-              <p className="eyebrow">Plan your event</p>
+              <p className="eyebrow">{copy.contact.eyebrow}</p>
               <h2
                 id="contact-heading"
                 ref={headingRef}
@@ -120,36 +123,34 @@ export default function Contact() {
                   )}
                 </span>
               </h2>
-              <p className="body-copy mt-4 max-w-md">
-                Share a few details and we&apos;ll pick it up on WhatsApp — with a menu and a clear quote.
-              </p>
+              <p className="body-copy mt-4 max-w-md">{t(copy.contact.body)}</p>
 
               <form onSubmit={submit} className="mt-6 rounded-brand border border-sand bg-cream p-6">
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
-                    <label htmlFor="c-email" className={label}>Your Email</label>
-                    <input id="c-email" type="email" value={f.email} onChange={on("email")} placeholder="you@email.com" className={input} />
+                    <label htmlFor="c-email" className={label}>{fields.email}</label>
+                    <input id="c-email" type="email" value={f.email} onChange={on("email")} placeholder={fields.emailPlaceholder} className={input} />
                   </div>
                   <div>
-                    <label htmlFor="c-phone" className={label}>Your Phone <span className="text-saffron-2">*</span></label>
-                    <input id="c-phone" type="tel" required value={f.phone} onChange={on("phone")} placeholder="Your phone number" className={input} />
+                    <label htmlFor="c-phone" className={label}>{fields.phone} <span className="text-saffron-2">*</span></label>
+                    <input id="c-phone" type="tel" required value={f.phone} onChange={on("phone")} placeholder={fields.phonePlaceholder} className={input} />
                   </div>
                 </div>
                 <div className="mt-4">
-                  <label htmlFor="c-address" className={label}>Your Address</label>
-                  <input id="c-address" type="text" value={f.address} onChange={on("address")} placeholder="Town / venue" className={input} />
+                  <label htmlFor="c-address" className={label}>{fields.address}</label>
+                  <input id="c-address" type="text" value={f.address} onChange={on("address")} placeholder={fields.addressPlaceholder} className={input} />
                 </div>
                 <div className="mt-4">
-                  <label htmlFor="c-message" className={label}>Message</label>
-                  <textarea id="c-message" rows={4} value={f.message} onChange={on("message")} placeholder="Event type, date and guest count" className={`${input} resize-y`} />
+                  <label htmlFor="c-message" className={label}>{fields.message}</label>
+                  <textarea id="c-message" rows={4} value={f.message} onChange={on("message")} placeholder={fields.messagePlaceholder} className={`${input} resize-y`} />
                 </div>
                 <button
                   type="submit"
                   className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-espresso px-7 py-4 font-sans text-sm font-semibold text-ivory transition-all duration-300 hover:-translate-y-0.5 hover:bg-ink"
                 >
-                  <WhatsAppIcon size={18} /> Send on WhatsApp
+                  <WhatsAppIcon size={18} /> {copy.contact.submit}
                 </button>
-                <p className="mt-3 text-center font-sans text-xs text-muted">Opens WhatsApp with your details ready to send.</p>
+                <p className="mt-3 text-center font-sans text-xs text-muted">{copy.contact.submitNote}</p>
               </form>
             </div>
           </Reveal>
